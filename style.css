@@ -451,7 +451,20 @@
   .foto-placeholder svg{ width:34px; height:34px; color:var(--dorado-400); }
   .foto-placeholder strong{ font-size:0.98rem; color:#fffdf7; font-weight:600; }
   .foto-placeholder span{ font-size:0.82rem; color:rgba(251,245,232,0.62); max-width:22ch; }
-  .hero-media .foto-placeholder{ min-height:340px; box-shadow:var(--sombra-lg); }
+  .hero-media .foto-placeholder{
+    min-height:340px;
+    padding:0;
+    overflow:hidden;
+    box-shadow:var(--sombra-lg);
+  }
+  .hero-media .foto-placeholder > img{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center;
+  }
   .hero-media-tag{
     position:absolute;
     bottom:-16px; left:-16px;
