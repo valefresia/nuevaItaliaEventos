@@ -7,7 +7,7 @@
     --verde-900:#5570b8;
     --verde-800:#567699;
     --verde-700:#46748f;
-    --dorado-600:##fccb4a;
+    --dorado-600:#fccb4a;
     --dorado-500:#e0a53f;
     --dorado-400:#eab758;
     --terracota-600:#5c5abc;
@@ -73,6 +73,7 @@
      ========================================================= */
   *,*::before,*::after{ box-sizing:border-box; }
   html{ scroll-behavior:smooth; }
+  html, body{ width:100%; max-width:100%; overflow-x:clip; }
   body{
     margin:0;
     background:var(--superficie);
@@ -103,6 +104,7 @@
   }
 
   .contenedor{
+    width:100%;
     max-width:var(--contenedor);
     margin-inline:auto;
     padding-inline:20px;
@@ -250,14 +252,23 @@
   .marca-texto span{ font-size:0.72rem; color:var(--texto-tenue); letter-spacing:0.02em; }
 
   .nav-desktop{ display:none; }
-  .nav-desktop ul{ display:flex; gap:28px; align-items:center; }
+  .nav-desktop > ul{
+    display:flex;
+    align-items:center;
+    gap:4px;
+    padding:5px;
+    background:var(--superficie-alt);
+    border:1px solid var(--borde);
+    border-radius:var(--r-pill);
+  }
   .nav-desktop a{
     text-decoration:none;
-    font-size:0.95rem;
+    font-size:0.88rem;
     font-weight:500;
     color:var(--texto-suave);
     position:relative;
-    padding-block:4px;
+    padding:8px 10px;
+    border-radius:var(--r-pill);
   }
   .nav-desktop a::after{
     content:'';
@@ -268,6 +279,42 @@
   }
   .nav-desktop a:hover::after,
   .nav-desktop a:focus-visible::after{ transform:scaleX(1); }
+
+  /* Galería también está dentro de “Más”; se evita duplicarla en la barra. */
+  .nav-galeria{ display:none; }
+  .nav-mas{ position:relative; }
+  .nav-mas-boton{
+    display:flex;
+    align-items:center;
+    gap:4px;
+    padding:8px 10px;
+    border:0;
+    border-radius:var(--r-pill);
+    background:transparent;
+    color:var(--texto-suave);
+    font:500 0.88rem var(--f-texto);
+    cursor:pointer;
+  }
+  .nav-mas-boton:hover,
+  .nav-mas-boton:focus-visible{ background:var(--tarjeta); color:var(--texto); }
+  .nav-mas-boton svg{ width:15px; height:15px; transition:transform .2s ease; }
+  .nav-mas.abierto .nav-mas-boton svg{ transform:rotate(180deg); }
+  .nav-submenu{
+    position:absolute;
+    top:calc(100% + 12px);
+    right:0;
+    display:none;
+    min-width:190px;
+    padding:8px;
+    background:var(--tarjeta);
+    border:1px solid var(--borde);
+    border-radius:var(--r-md);
+    box-shadow:var(--sombra-md);
+  }
+  .nav-mas.abierto .nav-submenu{ display:block; }
+  .nav-submenu a{ display:block; padding:10px 12px; }
+  .nav-submenu a:hover,
+  .nav-submenu a:focus-visible{ background:var(--superficie-alt); }
 
   .header-acciones{ display:flex; align-items:center; gap:14px; }
   .header-acciones .btn{ padding:12px 22px; font-size:0.92rem; min-height:44px; }
@@ -293,6 +340,7 @@
     padding:20px;
     transform:translateX(100%);
     transition:transform .32s cubic-bezier(.4,0,.2,1);
+    overflow-y:auto;
   }
   .menu-mobile.abierto{ transform:translateX(0); }
   .menu-mobile-top{ display:flex; justify-content:space-between; align-items:center; }
@@ -315,7 +363,7 @@
   .menu-mobile-social{ display:flex; gap:16px; color:rgba(255,255,255,0.7); font-size:0.9rem; }
   .menu-mobile-social a{ text-decoration:none; display:inline-flex; align-items:center; gap:6px; }
 
-  @media (min-width:960px){
+  @media (min-width:1100px){
     .nav-desktop{ display:block; }
     .boton-menu{ display:none; }
   }
@@ -520,6 +568,7 @@
     border:1px solid var(--borde);
     border-radius:var(--r-sm);
   }
+  .item-servicio > div{ min-width:0; }
   .item-servicio .marca-check{
     width:26px; height:26px;
     border-radius:50%;
@@ -732,6 +781,8 @@
     font-size:0.94rem;
     color:var(--texto-suave);
   }
+  .convivencia-destacado > span,
+  .promo-nota > span{ min-width:0; }
   .convivencia-item svg{ width:20px; height:20px; color:var(--terracota-600); flex-shrink:0; margin-top:1px; }
   .convivencia-destacado{
     margin-top:22px;
@@ -903,6 +954,20 @@
 
 /* Celulares pequeños */
 @media (max-width: 639px){
+  /* Base segura para teléfonos de 320 px en adelante. */
+  .header,
+  main,
+  .footer,
+  section,
+  .contenedor,
+  .hero-grid,
+  .hero-grid > *,
+  .sobre-grid > *,
+  .footer-grid > *{
+    min-width:0;
+    max-width:100%;
+  }
+
   .contenedor{
     padding-inline:16px;
   }
@@ -941,11 +1006,23 @@
   }
 
   .hero h1{
-    font-size:clamp(2.15rem, 10vw, 3rem);
+    font-size:clamp(2rem, 9vw, 2.65rem);
+    overflow-wrap:anywhere;
   }
 
   .hero-sub{
     font-size:1rem;
+    overflow-wrap:anywhere;
+  }
+
+  .hero-kicker{
+    max-width:100%;
+    flex-wrap:wrap;
+    line-height:1.45;
+  }
+
+  .hero-kicker .tresestrellas{
+    flex-shrink:0;
   }
 
   .hero-ctas{
@@ -955,6 +1032,9 @@
 
   .hero-ctas .btn{
     width:100%;
+    min-width:0;
+    white-space:normal;
+    text-align:center;
   }
 
   .hero-chips{
@@ -964,7 +1044,9 @@
   .chip{
     padding:8px 12px;
     font-size:0.8rem;
-  }
+    max-width:100%;
+    white-space:normal;
+   }
 
   .hero-media .foto-placeholder{
     min-height:260px;
@@ -1081,6 +1163,28 @@
   .cta-final{
     margin-inline:24px;
   }
+
+  /* En iPad vertical, el pie conserva columnas legibles. */
+  .footer-grid{
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+  }
+
+  .footer-marca{
+    grid-column:1 / -1;
+  }
+}
+
+/* El menú también se puede recorrer en teléfonos bajos o en horizontal. */
+@media (max-width:1100px) and (max-height:600px){
+  .menu-mobile nav{ margin-top:28px; }
+  .menu-mobile nav a{ padding-block:9px; font-size:1.35rem; }
+  .menu-mobile-footer{ margin-top:24px; }
+}
+
+/* No se mantiene el desplazamiento de hover al tocar una tarjeta. */
+@media (hover:none){
+  .card:hover,
+  .juego:hover{ transform:none; }
 }
 
 /* Computadoras */
